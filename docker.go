@@ -51,12 +51,12 @@ func docker() *cobra.Command {
 
 			for _, image := range images {
 				imageRemoveOptions := types.ImageRemoveOptions{Force: true, PruneChildren: true}
-				id, err := cli.ImageRemove(ctx, image.ID, imageRemoveOptions)
+				_, err := cli.ImageRemove(ctx, image.ID, imageRemoveOptions)
 				if err != nil {
 					fmt.Println("Image remove error")
 					panic(err)
 				}
-				fmt.Println("Deleted: sha256:", id[0].Deleted)
+				fmt.Println("Deleted: ", image.ID)
 			}
 
 			networks, err := cli.NetworkList(ctx, types.NetworkListOptions{})
@@ -71,6 +71,7 @@ func docker() *cobra.Command {
 					if err != nil {
 						panic(err)
 					}
+					fmt.Println(network.ID)
 				}
 			}
 
