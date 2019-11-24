@@ -25,11 +25,10 @@ func docker() *cobra.Command {
 			}
 
 			for _, container := range containers {
-				fmt.Println("Stopping container: ", container.ID[:10], "...")
 				if err := cli.ContainerStop(ctx, container.ID, nil); err != nil {
 					panic(err)
 				}
-				fmt.Println("Successfully removed container: ", container.ID[:10], "...")
+				fmt.Println(container.ID[:12])
 			}
 
 			images, err := cli.ImageList(ctx, types.ImageListOptions{})
@@ -38,14 +37,12 @@ func docker() *cobra.Command {
 			}
 
 			for _, image := range images {
-				fmt.Println("Stopping image: ", image.ID[:10], "...")
-
 				imageRemoveOptions := types.ImageRemoveOptions{Force: true, PruneChildren: true}
 				id, err := cli.ImageRemove(ctx, image.ID, imageRemoveOptions)
 				if err != nil {
 					panic(err)
 				}
-				fmt.Println("Successfully removed image ID: ", id[:10], "...")
+				fmt.Println("Deleted: sha256:", id[:64])
 			}
 
 			return nil
