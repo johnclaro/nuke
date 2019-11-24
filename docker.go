@@ -56,7 +56,7 @@ func docker() *cobra.Command {
 					fmt.Println("Image remove error")
 					panic(err)
 				}
-				fmt.Println("Deleted: ", image.ID)
+				fmt.Println("Deleted:", image.ID)
 			}
 
 			networks, err := cli.NetworkList(ctx, types.NetworkListOptions{})
