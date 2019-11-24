@@ -32,6 +32,22 @@ func docker() *cobra.Command {
 				fmt.Println("Successfully removed container: ", container.ID[:10], "...")
 			}
 
+			images, err := cli.ImageList(ctx, types.ImageListOptions{})
+			if err != nil {
+				panic(err)
+			}
+
+			for _, image := range images {
+				fmt.Println("Stopping image: ", image.ID[:10], "...")
+
+				imageRemoveOptions := types.ImageRemoveOptions{Force: true, PruneChildren: true}
+				id, err := cli.ImageRemove(ctx, image.ID, imageRemoveOptions)
+				if err != nil {
+					panic(err)
+				}
+				fmt.Println("Successfully removed image ID: ", id[:10], "...")
+			}
+
 			return nil
 		},
 	}
