@@ -20,6 +20,22 @@ func docker() *cobra.Command {
 				panic(err)
 			}
 
+			filterArgs := filters.Args{}
+			configListOptions := types.ConfigListOptions{Filters: filterArgs}
+			configs, err := cli.ConfigList(ctx, configListOptions)
+			if err != nil {
+				fmt.Println("Config list error")
+				panic(err)
+			}
+
+			for _, config := range configs {
+				if err := cli.ConfigRemove(ctx, config.ID); err != nil {
+					fmt.Println("Config remove error")
+					panic(err)
+				}
+				fmt.Println(config.ID)
+			}
+
 			containerListOptions := types.ContainerListOptions{All: true}
 			containers, err := cli.ContainerList(ctx, containerListOptions)
 			if err != nil {
