@@ -59,6 +59,21 @@ func docker() *cobra.Command {
 				fmt.Println("Deleted: sha256:", id[0].Deleted)
 			}
 
+			networks, err := cli.NetworkList(ctx, types.NetworkListOptions{})
+			if err != nil {
+				fmt.Println("Network list error")
+				panic(err)
+			}
+
+			for _, network := range networks {
+				if !(network.Name == "none" || network.Name == "bridge" || network.Name == "host") {
+					err := cli.NetworkRemove(ctx, network.ID)
+					if err != nil {
+						panic(err)
+					}
+				}
+			}
+
 			volumeArgs := filters.Args{}
 			volumes, err := cli.VolumeList(ctx, volumeArgs)
 			if err != nil {
