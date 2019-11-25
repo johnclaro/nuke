@@ -3,13 +3,9 @@ Removes all Docker configs, containers, images, networks, nodes, plugins, secret
 
 ## Installation
 
-Nuke CLI is available for macOS.
-
-### macOS
-
-Nuke CLI is available on macOS via [Homebrew](https://brew.sh/):
-
-TODO
+```
+go install
+```
 
 ## Usage
 
