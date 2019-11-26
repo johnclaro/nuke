@@ -1,5 +1,5 @@
 # nuke
-Removes all Docker configs, containers, images, networks, nodes, plugins, secrets, services and volumes.
+A command-line tool for removing Docker configs, containers, images, networks and volumes all at once.
 
 ## Installation
 
